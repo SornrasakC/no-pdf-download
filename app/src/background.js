@@ -1,30 +1,9 @@
 'use strict';
 
-// For Chrome we have to use "extraHeaders" to get all headers
-let extraInfoSpec = [
-    'responseHeaders',
-    'blocking',
-];
-if(chrome.webRequest.OnBeforeSendHeadersOptions.hasOwnProperty('EXTRA_HEADERS')) {
-    extraInfoSpec.push('extraHeaders');
-}
+// This service worker is currently minimal as the core PDF handling logic
+// has been migrated to declarativeNetRequest rules in rules.json.
+// Add any further background logic needed for Manifest V3 here.
 
-// Register receiver for reponse headers
-chrome.webRequest.onHeadersReceived.addListener(
-    (details) => {
-        let newHeaders = handleHeaders(details.url, details.responseHeaders);
-        if(newHeaders !== undefined) {
-            return {
-                responseHeaders: newHeaders
-            };
-        }
-    },
-    {
-        types: [
-            'main_frame',
-            'sub_frame',
-        ],
-        urls: ['<all_urls>'],
-    },
-    extraInfoSpec
-);
+chrome.runtime.onInstalled.addListener(() => {
+  console.log('"No PDF Download" extension installed (Manifest V3).');
+});

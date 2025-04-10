@@ -1,20 +1,25 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "No PDF Download",
     "description": "Opens all PDF files directly in the browser.",
     "version": "1.0.6",
 
-    "permissions": [
-        "webRequest",
-        "webRequestBlocking",
+    "host_permissions": [
         "<all_urls>"
     ],
+    "permissions": [
+        "declarativeNetRequest"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "ruleset_1",
+            "enabled": true,
+            "path": "rules.json"
+        }]
+    },
 
     "background": {
-        "scripts": [
-            "src/headers.js",
-            "src/background.js"
-        ]
+        "service_worker": "src/background.js"
     },
 
     "icons": {
